@@ -40,8 +40,8 @@ Done:
 - use request headers
 - use request data (JSON)
 - provide ExtendedTab class as subclass of Tab to access children by name
-- change module name to ipypostman
-- rename package to `ipypostman`
+- change module name to ipyrest
+- rename package to `ipyrest`
 - class `__init__` constructor has url, params, headers, cookies
 - distinguish between path params and query params
 - show bitmaps tab for respective content-type in response header
