@@ -1,0 +1,241 @@
+"""
+Default ResponseView classes for IPyRest.
+"""
+
+import re
+import json
+from math import log, fabs
+from collections import OrderedDict
+from typing import Dict, Tuple, List, Union, Optional, Any, Callable
+
+import geojson
+import requests
+import ipyleaflet
+from ipywidgets import (Widget, HBox, VBox, Text, Textarea,
+    Button, Layout, Tab, Image, HTML)
+
+
+# Bounding box functions related to GeoJSONResponseView
+
+def geojson_bbox(gj_object) -> Tuple[Tuple[float, float], Tuple[float, float]]:
+    """
+    Return bbox for a GeoJSON object as ((min_lon, min_lat), (max_lon, max_lat)).
+    """
+    gj = geojson.loads(json.dumps(gj_object))
+    coords = []
+    for feat in gj['features']:
+        coords += list(geojson.coords(feat))
+    coords = tuple(coords)
+    bbox = min(coords), max(coords)
+    return bbox
+
+def bbox_center(p: Tuple[float, float],
+                q: Tuple[float, float]) -> Tuple[float, float]:
+    """
+    Return middle point between two points p and q.
+    """
+    (min_lon, min_lat), (max_lon, max_lat) = p, q
+    center = min_lon + (max_lon - min_lon) / 2, min_lat + (max_lat - min_lat) / 2
+    return center
+
+def zoom_for_bbox(lon_min: float, 
+                  lat_min: float, 
+                  lon_max: float,
+                  lat_max: float) -> int:
+    """
+    Return zoom level for some bounding box.
+    """
+    lat_diff = fabs(lat_max - lat_min)
+    lon_diff = fabs(lon_max - lon_min)
+    max_diff = max(lon_diff, lat_diff)
+
+    if max_diff < 360 / 2**20:
+        zoom_level = 21
+    else:
+        zoom_level = int(-1*( (log(max_diff)/log(2)) - (log(360)/log(2))))
+        if zoom_level < 1:
+            zoom_level = 1
+    return zoom_level
+
+
+# All views render a requests.Response object as an ipywidget in a Jupyter notebook.
+
+class ResponseView(object):
+    """
+    Abstract view baseclass for rendering a ``requests.Response`` object
+    into an ipywidgets.Widget.
+    """
+    def __init__(self, owner=None) -> None:
+        "Create a new ResponseView. The owner is the API using it."
+
+        self.owner = owner
+        self.data = None
+
+    def render(self, resp: requests.models.Response) -> Optional[Widget]:
+        "Return some rendered 'view' of the response or None."
+
+        return None
+
+class RawResponseView(object):
+    """
+    A view that renders a raw response in an ipywidgets.Textarea.
+    """
+    name = 'Raw'
+    mimetype_pats = ['.*']
+
+    def render(self, resp: requests.models.Response) -> Optional[Widget]:
+        "Return some rendered raw 'view' of the response or None."
+
+        obj = resp.content
+        self.data = obj
+        layout = Layout(width='100%', height='100px')
+        ta = Textarea(layout=layout)
+        ta.value = str(resp.content.decode(resp.encoding)) \
+                if resp.encoding else str(resp.content)
+        return ta
+
+class HTMLResponseView(ResponseView):
+    """
+    A view that renders HTML in an ipywidgets.HTML.
+    """
+    name = 'HTML'
+    mimetype_pats = ['text/html.*']
+    
+    def render(self, resp: requests.models.Response) -> HTML:
+        "Return HTML rendered using an HTML ipywidget, or None."
+
+        obj = resp.content
+        try:
+            self.data = obj.decode('utf-8')
+            h = HTML(self.data)
+        except:
+            self.data = obj
+            h = HTML(obj)
+        return h
+
+class SVGResponseView(ResponseView):
+    """
+    A view that renders SVG somehow.
+    """
+    name = 'SVG'
+    mimetype_pats = ['image/svg\+xml']
+    
+    def render(self, resp: requests.models.Response) -> HTML:
+        "Return SVG soehow, or None."
+
+        obj = resp.content
+        try:
+            self.data = obj.decode('utf-8')
+            h = HTML(self.data)
+        except:
+            self.data = obj
+            h = HTML(obj)
+        return h
+
+class ImageResponseView(ResponseView):
+    """
+    A view that renders a bitmap image in an ipywidgets.Image.
+    """
+    name = 'Image'
+    mimetype_pats = ['image/.*']
+    
+    def render(self, resp: requests.models.Response) -> Image:
+        "Return an ipywidget image with the data object rendered on it, or None."
+
+        obj = resp.content
+        ct = resp.headers['Content-Type']
+        maintype, subtype, params = re.match('(\w+)/([\.\+\w]+)(;.*)?', ct).groups()
+        img = Image(value=obj, format=subtype)
+        self.data = img
+        return img
+        
+class JSONResponseView(ResponseView):
+    """
+    A view that renders JSON in some semi-pretty form in an ipywidgets.Textarea.
+    """
+    name = 'JSON'
+    mimetype_pats = ['application/json', 'application/vnd\..*\+json']
+
+    def render(self, resp: requests.models.Response) -> Textarea:
+        "Return a somewhat prettified JSON string."
+        
+        obj = resp.json()
+        self.data = obj
+        layout = Layout(width='100%', height='100px')
+        ta = Textarea(layout=layout)
+        ta.value = json.dumps(obj, indent=2)
+        return ta
+    
+class GeoJSONResponseView(ResponseView):
+    """
+    A view that renders GeoJSON on an ipyleaflet.Map.
+    """
+    name = 'GeoJSON'
+    mimetype_pats = ['application/vnd\.geo\+json']
+
+    def render(self, resp: requests.models.Response) -> ipyleaflet.Map:
+        "Return an ipyleaflet map with the GeoJSON object rendered on it, or None."
+
+        obj = resp.json()
+        if obj.get('type', None) != 'FeatureCollection':
+            return None
+        bbox = geojson_bbox(obj)
+        mins, maxs = bbox
+        center = list(reversed(bbox_center(*bbox)))
+        z = zoom_for_bbox(*(mins + maxs))
+        m = ipyleaflet.Map(center=center, zoom=z + 1)
+        m.add_layer(layer=ipyleaflet.GeoJSON(data=obj))
+        self.data = m
+        return m
+
+class Scatter3DResponseView(ResponseView):
+    """
+    A view that renders 3D scatter plot data in some expected format in an ipyvolume cube.
+    
+    WARNING: Not sure if IPyVolume widgets are supposed to render in JupyterLab!
+    """
+    name = 'Scatter-3D'
+    mimetype_pats = ['application/vnd\.3d\+json']
+
+    def render(self, resp: requests.models.Response) -> Widget:
+        "Return an ipyvolume cube with the data object rendered on it, or None."
+
+        obj = resp.json()
+        self.data = obj
+        import numpy as np
+        import ipyvolume as ipv
+        x, y, z = np.random.random((3, obj['num']))
+        # [x, y, z] = [obj[ch] for ch in 'x y z'.split()]
+        res = ipv.quickscatter(x, y, z, size=1, marker="sphere")
+
+        return res
+
+class ProtobufResponseView(ResponseView):
+    """
+    A view that renders Protobuf objects deserialized into text.
+    """
+    name = 'Protobuf'
+    mimetype_pats = ['application/x\-protobuf']
+    
+    def render(self, resp: requests.models.Response) -> Textarea:
+        "Return deserialized Protobuf objects as text inside a Textarea."
+
+        obj = resp.content
+        import addressbook_pb2
+        person = addressbook_pb2.Person()
+        person.ParseFromString(obj)
+        self.data = person
+        layout = Layout(width='100%', height='100px')
+        ta = Textarea(layout=layout)
+        ta.value = str(person)
+        return ta
+
+# A list of all built-in ResponseView subclasses in this module:
+
+builtin_view_classes = [
+    n for (k, n) in globals().items() 
+        if type(n)== type and issubclass(n, ResponseView) and n != ResponseView]
+
+# builtin_view_classes_dict = OrderedDict({k: n
+#     for (k, n) in globals().items() 
+#         if type(n)== type and issubclass(n, ResponseView) and n != ResponseView})
