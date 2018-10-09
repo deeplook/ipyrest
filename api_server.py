@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-A simple HTTP server implementing a minimal RESTful API for testing IPyPostman.
+A simple HTTP server implementing a minimal RESTful API for testing IPyRest.
 """
 
 import json

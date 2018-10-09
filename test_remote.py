@@ -1,5 +1,5 @@
 """
-IPyPostman tests running on remote APIs or sites.
+IPyRest tests running on remote APIs or sites.
 
 To be executed with PyTest:
 

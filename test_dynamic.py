@@ -1,5 +1,5 @@
 """
-IPyPostman tests running examples stored in stand-alone code snippets.
+IPyRest tests running examples stored in stand-alone code snippets.
 
 These tests are all based on small use-cases implemented in individual
 Python modules. They are expected to run stand-alone and create one

@@ -1,5 +1,5 @@
 """
-IPyPostman tests running on a local server implementing sample API endpoints.
+IPyRest tests running on a local server implementing sample API endpoints.
 
 To be executed with PyTest:
 
