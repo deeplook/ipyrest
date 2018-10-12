@@ -1,5 +1,11 @@
 # IPyRest
 
+IPyRest is an emerging Jupyter widget for exploring RESTful APIs still in alpha state. It has two main goals: provide a more intuitive interface in the spirit of Postman, and allow to plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON:
+
+![banner](banner.png "")
+
+More to come...
+
 Concepts:
 
 - Server
