@@ -1,5 +1,5 @@
 """
-Default ResponseView classes for IPyRest.
+Default ResponseView classes for ipyrest.
 """
 
 import re
@@ -206,7 +206,7 @@ class Scatter3DResponseView(ResponseView):
 
         f = io.BytesIO(resp.content)
         points = pd.read_csv(f, delim_whitespace=True)
-        # points = points[:: 300] # no downsampling!
+        # points = points[:: 300] # FIXME: use down-sampling here
         x = points.iloc[:,0].values
         y = points.iloc[:,1].values
         z = points.iloc[:,2].values

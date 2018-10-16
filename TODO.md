@@ -1,6 +1,8 @@
-# IPyRest TODO
+# TODO
 
-This is a Postman-like Jupyter widget for exploring Rest APIs. More to come...
+This is a slightly Postman-like Jupyter widget for exploring RESTful APIs.
+
+More to come...
 
 To-do:
 
@@ -9,7 +11,7 @@ To-do:
 - add real gists with 3D data (simple and Lidar-like)
 - pass entire vcr recorder object instead of a cassette path to make config easier
 - use type hints for signatures (except for JSON, use Any there)
-- test URLs with encoded params like https://web.splunk.ext.here.com/en-US/app/olp/search?q=search%20index%3Dolp-here-test_common
+- test URLs with encoded params like https://foo.com/search?q=search%20index%3D
 - use/show/test request/response cookies
 - create something like a RequestView class with some UI for the input
 - use sliders in addition to text fields for numerical request parameters

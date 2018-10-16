@@ -1,6 +1,6 @@
-# IPyRest
+# Ipyrest
 
-IPyRest is an emerging Jupyter widget for exploring RESTful APIs still in alpha state. It has two main goals: provide a more intuitive interface in the spirit of Postman, and allow to plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON:
+Ipyrest is an emerging Jupyter widget for exploring RESTful APIs still in alpha state. It has two main goals: provide a more intuitive interface in the spirit of Postman, and allow to plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON:
 
 ![banner](banner.png "")
 
@@ -53,5 +53,5 @@ Main direct dependencies:
 Issues:
 
 - Traitlets limitations (mainly on compound widgets)
-- Text styling (ipywidgets.Html)
+- Text styling (ipywidgets.HTML)
 - CesiumJS (not an ipywidget)

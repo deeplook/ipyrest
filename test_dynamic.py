@@ -1,12 +1,12 @@
 """
-IPyRest tests running examples stored in stand-alone code snippets.
+Ipyrest tests running examples stored in stand-alone code snippets.
 
 These tests are all based on small use-cases implemented in individual
 Python modules. They are expected to run stand-alone and create one
 Api instance named e.g. ``api`` (but it can be any arbitrary name)
 which will be inspected in the test functions contained here.
 
-To be executed with PyTest:
+To be executed with pytest:
 
     pytest -s -v test_dynamic.py
 """

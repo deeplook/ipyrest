@@ -1,7 +1,7 @@
 """
-IPyRest tests running on a local server implementing sample API endpoints.
+Ipyrest tests running on a local server implementing sample API endpoints.
 
-To be executed with PyTest:
+To be executed with pytest:
 
     pytest -s -v test_local.py
 """

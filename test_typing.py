@@ -1,7 +1,7 @@
 """
-IPyRest tests running typechecks on its own modules.
+Ipyrest tests running typechecks on its own modules.
 
-To be executed with PyTest:
+To be executed with pytest:
 
     pytest -s -v test_typing.py
 """

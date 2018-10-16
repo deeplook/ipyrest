@@ -1,7 +1,7 @@
 """
-IPyRest tests running on remote APIs or sites.
+Ipyrest tests running on remote APIs or sites.
 
-To be executed with PyTest:
+To be executed with pytest:
 
     pytest -s -v test_remote.py
 """
