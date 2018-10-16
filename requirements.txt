@@ -1,8 +1,9 @@
 geojson
 ipyleaflet
-ipywidgets
 ipyvolume
+ipywidgets
 numpy
+pandas
 protobuf
 requests
 timeout_decorator

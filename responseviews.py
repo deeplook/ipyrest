@@ -3,6 +3,7 @@ Default ResponseView classes for IPyRest.
 """
 
 import re
+import io
 import json
 from math import log, fabs
 from collections import OrderedDict
@@ -10,7 +11,9 @@ from typing import Dict, Tuple, List, Union, Optional, Any, Callable
 
 import geojson
 import requests
+import ipyvolume
 import ipyleaflet
+import pandas as pd
 from ipywidgets import (Widget, HBox, VBox, Text, Textarea,
     Button, Layout, Tab, Image, HTML)
 
@@ -58,7 +61,7 @@ def zoom_for_bbox(lon_min: float,
     return zoom_level
 
 
-# All views render a requests.Response object as an ipywidget in a Jupyter notebook.
+# All response views render a requests.Response object as an ipywidget.
 
 class ResponseView(object):
     """
@@ -190,23 +193,24 @@ class GeoJSONResponseView(ResponseView):
 
 class Scatter3DResponseView(ResponseView):
     """
-    A view that renders 3D scatter plot data in some expected format in an ipyvolume cube.
+    A view that renders 3D scatter plot data as dots in an ipyvolume widget.
     
-    WARNING: Not sure if IPyVolume widgets are supposed to render in JupyterLab!
+    The data source is expected to be a table with three or more columns
+    of which the first three are taken to by x, y, and z.
     """
     name = 'Scatter-3D'
-    mimetype_pats = ['application/vnd\.3d\+json']
+    mimetype_pats = ['application/vnd\.3d\+txt']
 
     def render(self, resp: requests.models.Response) -> Widget:
-        "Return an ipyvolume cube with the data object rendered on it, or None."
+        "Return an ipyvolume widget with the data object rendered on it."
 
-        obj = resp.json()
-        self.data = obj
-        import numpy as np
-        import ipyvolume as ipv
-        x, y, z = np.random.random((3, obj['num']))
-        # [x, y, z] = [obj[ch] for ch in 'x y z'.split()]
-        res = ipv.quickscatter(x, y, z, size=1, marker="sphere")
+        f = io.BytesIO(resp.content)
+        points = pd.read_csv(f, delim_whitespace=True)
+        # points = points[:: 300] # no downsampling!
+        x = points.iloc[:,0].values
+        y = points.iloc[:,1].values
+        z = points.iloc[:,2].values
+        res = ipyvolume.quickscatter(x, y, z, size=.25, marker="sphere")
 
         return res
 

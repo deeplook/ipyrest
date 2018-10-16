@@ -14,16 +14,15 @@ import logging
 from math import log, fabs
 from collections import OrderedDict
 from urllib.parse import parse_qs, splitquery
-from typing import Dict, Tuple, List, Union, Optional, Any, Callable
 
 import vcr
-import geojson
 import requests
 import timeout_decorator
 import ipyleaflet
 import ipywidgets as widgets
 from ipywidgets import (Widget, HBox, VBox, Text, Textarea, Dropdown,
     Button, Layout, Tab, Image, HTML)
+from typing import Dict, Tuple, List, Union, Optional, Any, Callable
 
 from extendedtab import ExtendedTab
 from responseviews import RawResponseView, ResponseView, builtin_view_classes 
@@ -152,8 +151,7 @@ class Api(object):
         lt_w100px = Layout(width='100%px')
         
         # top input line with URL field
-        opts = 'GET POST PUT PATCH DELETE COPY HEAD OPTIONS LINK UNLINK '\
-               'PURGE LOCK UNLOCK PROPFIND VIEW'.split()
+        opts = 'GET POST PUT PATCH DELETE HEAD OPTIONS'.split()
         self.method_ddn = Dropdown(
             options=opts,
             value=method.upper(),
@@ -359,7 +357,8 @@ class Api(object):
             reason=resp.reason,
             encoding=resp.encoding, 
             elapsed='{:.3f}'.format(resp.elapsed.total_seconds()), 
-            length=resp.headers['Content-Length'],
+            # length=resp.headers['Content-Length'],
+            length=resp.headers.get('Content-Length', '?'),
             cached=is_cached
         )
         self.resp_htm = HBox([
