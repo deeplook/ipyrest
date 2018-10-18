@@ -2,7 +2,7 @@
 
 [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/deeplook/ipyrest/master)
 
-Ipyrest is an emerging Jupyter widget for exploring RESTful APIs still in alpha state. It has two main goals: provide a more intuitive interface in the spirit of Postman, and allow to plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON:
+Ipyrest is an emerging Jupyter widget for exploring RESTful APIs. It has two main goals: provide a more convenient interface in the spirit of Postman, and allow to plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON:
 
 ![banner](banner.png "")
 
