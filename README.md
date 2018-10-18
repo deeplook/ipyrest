@@ -4,6 +4,8 @@ Ipyrest is an emerging Jupyter widget for exploring RESTful APIs still in alpha 
 
 ![banner](banner.png "")
 
+[![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/deeplook/ipyrest/master)
+
 More to come...
 
 Concepts:
