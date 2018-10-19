@@ -67,6 +67,11 @@ Installation
 
 Not yet...
 
+Testing
+-------
+
+Just make sure you have `pytest` installed and run `pytest -s -v` in the root directory. Some tests will be skipped if you have not started a local webserver before with  `python api_server.py` which implements a set of sample API endpoints for local testing. Some tests need keys/tokens defined as environment variables for the respective APIs being tested.
+
 Documentation
 -------------
 
