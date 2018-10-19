@@ -75,7 +75,7 @@ Just make sure you have `pytest` installed and run `pytest -s -v` in the root di
 Documentation
 -------------
 
-Not yet...
+Not yet... At the moment it is recommended to look at [`x_meetup.ipynb`](x_meetup.ipynb), mostly a tutorial-like collection of examples given as a presentation at a meetup.
 
 How to Contribute
 -----------------
