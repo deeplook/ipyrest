@@ -3,13 +3,16 @@
 [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/deeplook/ipyrest/master) 
 [![Nbviewer](https://github.com/jupyter/design/blob/master/logos/Badges/nbviewer_badge.svg)](http://nbviewer.jupyter.org/github/deeplook/ipyrest/tree/master/)
 
-Ipyrest is an emerging Jupyter widget for exploring RESTful APIs. It has two main goals: provide a more convenient interface in the spirit of Postman, and allow to plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON:
+Ipyrest is an emerging Jupyter notebook widget for exploring RESTful APIs. It has two main goals: provide a more convenient interface in the spirit of Postman, and allow to plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON:
 
 ![banner](banner.png "")
 
+Features
+--------
+
 More to come...
 
-Concepts:
+Concepts covered:
 
 - Server
 - Service
@@ -56,5 +59,20 @@ Main direct dependencies:
 Issues:
 
 - Traitlets limitations (mainly on compound widgets)
-- Text styling (ipywidgets.HTML)
-- CesiumJS (not an ipywidget)
+- Text styling (`ipywidgets.HTML`), see [ipywidgets/issues/2206](https://github.com/jupyter-widgets/ipywidgets/issues/2206)
+- `cesiumpy` not an `ipywidget`
+
+Installation
+------------
+
+Not yet...
+
+Documentation
+-------------
+
+Not yet...
+
+How to Contribute
+-----------------
+
+More to come...
