@@ -105,12 +105,9 @@ def mask_credentials(text: str, field_names: List[str]) -> str:
         text = re.sub(f'{name}=[\-\w]+', f'{name}=******', text)
     return text
 
-class Api(object):
+class Api(VBox):
     """
-    Build a pseudo-widget that mimics a Postman interface for exploring APIs.
-    
-    Approach: first try building a more or less complicated layout, later
-    refactor into a proper dedicated widget class. 
+    Return a widget that mimics a Postman-like interface for exploring APIs.
     """
     def __init__(self,
                  url: str = '',
@@ -131,6 +128,8 @@ class Api(object):
         """
         Build widget layout and wire its components.
         """
+        super().__init__()
+
         self.url = url
         self.method = method
         self.args = args
@@ -210,7 +209,7 @@ class Api(object):
             ui_kids += [self.req_htm, self.req_pane]
         if self.showing_rep_pane:
             ui_kids += [self.resp_htm, self.resp_pane]
-        self.ui = VBox(ui_kids)
+        self.children = ui_kids
         
         # fill in default arguments and parameters if given        
         if url:
@@ -259,7 +258,7 @@ class Api(object):
             kids += [self.req_htm, self.req_pane]
         if self.showing_rep_pane:
             kids += [self.resp_htm, self.resp_pane]
-        self.ui.children = tuple(kids)
+        self.children = tuple(kids)
 
     def req_clicked(self, btn: Button) -> None:
         "Callback to be called when the Request button is clicked."

@@ -18,14 +18,15 @@ To-do:
 - use dropdown boxes in addition to text fields for categorial request parameters
 - mask request query params with specific names (makes the interface a little useless...)
 - add clear button to response pane
-- use widget cookiecutter template https://github.com/jupyter-widgets/widget-cookiecutter
-- learn from https://github.com/oschuett/appmode how to set-up a nice repo with binder integration
 - add more tests, accessing various types of response output and views derived from it
 - concentrate init params for Api class into configuration object
 - describe init params in Api class' decstring
+- learn more from https://github.com/oschuett/appmode to add an even better binder integration
 
 Done:
 
+- add working mybinder.org badge
+- add working nbviewer badge
 - add info to status line if request response was read from cache (`vcr` cassette) 
 - add test using mypy on some parts of the code
 - access result data rendered in response view (built-in or custom)

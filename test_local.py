@@ -36,7 +36,7 @@ def test_vcr():
     from ipyrest import Api, recorder
     server = 'http://localhost:5000'
     cassette_path = 'cassette3.yaml'
-    Api(f'{server}/get_header', cassette_path=cassette_path, click_send=True).ui # get_json
+    Api(f'{server}/get_header', cassette_path=cassette_path, click_send=True) # get_json
     assert exists(join(recorder.cassette_library_dir, cassette_path))
 
 
@@ -46,7 +46,7 @@ def test_api_local():
 
     from ipyrest import Api
     server = 'http://localhost:5000'
-    Api(f'{server}/get_json').ui
+    Api(f'{server}/get_json')
     assert True
 
 
