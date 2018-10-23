@@ -5,7 +5,7 @@
 
 Ipyrest is an emerging Jupyter notebook widget for exploring RESTful APIs. It has two main goals: provide a more convenient interface in the spirit of Postman, and allow to plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON:
 
-![banner](banner.png "")
+![banner](images/banner.png "")
 
 Features
 --------
@@ -70,12 +70,12 @@ Not yet...
 Testing
 -------
 
-Just make sure you have `pytest` installed and run `pytest -s -v` in the root directory. Some tests will be skipped if you have not started a local webserver before with  `python api_server.py` which implements a set of sample API endpoints for local testing. Some tests need keys/tokens defined as environment variables for the respective APIs being tested.
+Just make sure you have `pytest` installed and run `PYTHONPATH=. pytest -s -v tests` in the root directory. Some tests will be skipped if you have not started a local webserver before with  `python tests/api_server.py` which implements a set of sample API endpoints for local testing. Some tests need keys/tokens defined as environment variables for the respective APIs being tested.
 
 Documentation
 -------------
 
-Not yet... At the moment it is recommended to look at [`x_meetup.ipynb`](x_meetup.ipynb), mostly a tutorial-like collection of examples given as a presentation at a meetup.
+Not yet... At the moment it is recommended to look at [`meetup.ipynb`](meetup.ipynb), mostly a tutorial-like collection of examples given as a presentation at a meetup.
 
 How to Contribute
 -----------------
