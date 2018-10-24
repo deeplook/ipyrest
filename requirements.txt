@@ -1,7 +1,7 @@
 geojson
 ipyleaflet
-ipyvolume==0.5.1
-ipywidgets==7.4.2
+ipyvolume>=0.5.1
+ipywidgets>=7.4.2
 numpy
 pandas
 protobuf
