@@ -28,11 +28,13 @@ def type_scan(paths: List[str], flags: List[str] = []) -> TypeComplaint:
         print(fn, lineno, typ, line)
         yield fn, int(lineno), typ, line
 
-    
+
 def test_typing3():
     """Test if mypy has no typing complaints about this package."""
 
-    import ipyrest, extendedtab, responseviews
+    import ipyrest
+    import extendedtab
+    import responseviews
     files = [m.__file__ for m in (ipyrest, extendedtab, responseviews)]
     scan = type_scan(files, flags=['ignore-missing-imports'])
     assert len(list(scan)) == 0

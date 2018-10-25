@@ -32,7 +32,7 @@ def test_usecase_jupyter_header():
 
     import usecase_jupyter_header as usecase
     pmw = get_postman_widget(usecase)
-    
+
     import json
 
     assert pmw.url_txt.value == pmw.url
@@ -40,13 +40,14 @@ def test_usecase_jupyter_header():
     h = json.loads(pmw.resp_pane.get_child_named('Headers').value)
     assert h["Content-Type"] == "text/html; charset=utf-8"
 
-    
+
 def test_usecase_here_geocoder():
     "Run dynamic test for external module."
 
     import usecase_here_geocoder as usecase
     pmw = get_postman_widget(usecase)
-    
+
     exp = {'Latitude': 52.5308599, 'Longitude': 13.38474}
-    res = pmw.resp.json()['Response']['View'][0]['Result'][0]['Location']['DisplayPosition']
+    res = pmw.resp.json()[
+        'Response']['View'][0]['Result'][0]['Location']['DisplayPosition']
     assert res == exp

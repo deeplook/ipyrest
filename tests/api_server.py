@@ -41,33 +41,39 @@ def home() -> str:
     resp = Response('')
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
-    
+
+
 @app.route('/head', methods=['HEAD'])
 def head() -> str:
     resp = app.make_response('')
     resp.mimetype = "text/plain"
     return resp
 
+
 @app.route('/get_json')
 def get_json() -> str:
     obj = {'foo': 23, 'bar': 'b a r'.split()}
     return jsonify(obj)
-    
+
+
 @app.route('/get_json_param/<int:param>')
 def get_json_param(param: int) -> str:
     obj = {'foo': 'bar', 'param': param}
     return jsonify(obj)
-    
+
+
 @app.route('/get_json_query/')
 def get_json_query() -> str:
     args = request.args
     return jsonify(args)
+
 
 @app.route('/post_json_data/', methods=['POST'])
 def post_json_data() -> str:
     data = request.data
     print(data)
     return jsonify(data)
+
 
 @app.route('/get_json_3d/')
 def get_json_3d() -> str:
@@ -76,11 +82,13 @@ def get_json_3d() -> str:
     data = dict(x=x.tolist(), y=y.tolist(), z=z.tolist())
     return jsonify(data)
 
+
 @app.route('/get_image')
 def get_image() -> str:
     # if request.args.get('type') == '1':
     filename = 'jupyter.jpg'
     return send_file(filename, mimetype='image/jpeg')
+
 
 @app.route("/get_header")
 def get_header() -> str:
@@ -88,9 +96,11 @@ def get_header() -> str:
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
+
 @app.route("/get_header_echo")
 def get_header_echo() -> str:
     return jsonify(dict((k, v) for (k, v) in request.headers.items()))
+
 
 @app.route('/get_mimetype')
 def get_mimetype() -> str:
@@ -99,10 +109,12 @@ def get_mimetype() -> str:
     resp.mimetype = "text/xml"
     return resp
 
+
 @app.route('/get_slow/sleep/<float:period>')
 def get_slow(period: float) -> str:
     time.sleep(period)
     return f'Sorry for being {period} seconds late!'
+
 
 @app.route('/get_protobuf')
 def get_protobuf() -> str:
@@ -111,6 +123,7 @@ def get_protobuf() -> str:
     resp.mimetype = "application/x-protobuf"
     return resp
 
+
 @app.route('/get_protobuf/person/<int:id>')
 def get_protobuf_person(id: int) -> str:
     import addressbook_pb2
@@ -118,17 +131,18 @@ def get_protobuf_person(id: int) -> str:
     with open('addressbook_pb', "rb") as f:
         address_book = addressbook_pb2.AddressBook()
         address_book.ParseFromString(f.read())
-    
+
     person = None
     for per in address_book.people:
         if per.id == id:
             break
-    
+
     person_ser = person.SerializePartialToString() if person else b''
-    
+
     resp = app.make_response(person_ser)
     resp.mimetype = "application/x-protobuf"
     return resp
+
 
 @app.route('/get_svg')
 def get_svg() -> str:

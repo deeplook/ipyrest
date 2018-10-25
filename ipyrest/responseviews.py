@@ -17,7 +17,7 @@ import ipyvolume
 import ipyleaflet
 import pandas as pd
 from ipywidgets import (Widget, HBox, VBox, Text, Textarea,
-    Button, Layout, Tab, Image, HTML)
+                        Button, Layout, Tab, Image, HTML)
 
 
 # Bounding box functions related to GeoJSONResponseView
@@ -34,17 +34,20 @@ def geojson_bbox(gj_object) -> Tuple[Tuple[float, float], Tuple[float, float]]:
     bbox = min(coords), max(coords)
     return bbox
 
+
 def bbox_center(p: Tuple[float, float],
                 q: Tuple[float, float]) -> Tuple[float, float]:
     """
     Return middle point between two points p and q.
     """
     (min_lon, min_lat), (max_lon, max_lat) = p, q
-    center = min_lon + (max_lon - min_lon) / 2, min_lat + (max_lat - min_lat) / 2
+    center = min_lon + (max_lon - min_lon) / 2, min_lat + \
+        (max_lat - min_lat) / 2
     return center
 
-def zoom_for_bbox(lon_min: float, 
-                  lat_min: float, 
+
+def zoom_for_bbox(lon_min: float,
+                  lat_min: float,
                   lon_max: float,
                   lat_max: float) -> int:
     """
@@ -57,7 +60,7 @@ def zoom_for_bbox(lon_min: float,
     if max_diff < 360 / 2**20:
         zoom_level = 21
     else:
-        zoom_level = int(-1*( (log(max_diff)/log(2)) - (log(360)/log(2))))
+        zoom_level = int(-1 * ((log(max_diff) / log(2)) - (log(360) / log(2))))
         if zoom_level < 1:
             zoom_level = 1
     return zoom_level
@@ -70,6 +73,7 @@ class ResponseView(object):
     Abstract view baseclass for rendering a ``requests.Response`` object
     into an ipywidgets.Widget.
     """
+
     def __init__(self, owner=None) -> None:
         "Create a new ResponseView. The owner is the API using it."
 
@@ -80,6 +84,7 @@ class ResponseView(object):
         "Return some rendered 'view' of the response or None."
 
         return None
+
 
 class RawResponseView(object):
     """
@@ -96,8 +101,9 @@ class RawResponseView(object):
         layout = Layout(width='100%', height='100px')
         ta = Textarea(layout=layout)
         ta.value = str(resp.content.decode(resp.encoding)) \
-                if resp.encoding else str(resp.content)
+            if resp.encoding else str(resp.content)
         return ta
+
 
 class HTMLResponseView(ResponseView):
     """
@@ -105,7 +111,7 @@ class HTMLResponseView(ResponseView):
     """
     name = 'HTML'
     mimetype_pats = ['text/html.*']
-    
+
     def render(self, resp: requests.models.Response) -> HTML:
         "Return HTML rendered using an HTML ipywidget, or None."
 
@@ -118,13 +124,14 @@ class HTMLResponseView(ResponseView):
             h = HTML(obj)
         return h
 
+
 class SVGResponseView(ResponseView):
     """
     A view that renders SVG somehow.
     """
     name = 'SVG'
     mimetype_pats = ['image/svg\+xml']
-    
+
     def render(self, resp: requests.models.Response) -> HTML:
         "Return SVG soehow, or None."
 
@@ -137,23 +144,26 @@ class SVGResponseView(ResponseView):
             h = HTML(obj)
         return h
 
+
 class ImageResponseView(ResponseView):
     """
     A view that renders a bitmap image in an ipywidgets.Image.
     """
     name = 'Image'
     mimetype_pats = ['image/.*']
-    
+
     def render(self, resp: requests.models.Response) -> Image:
         "Return an ipywidget image with the data object rendered on it, or None."
 
         obj = resp.content
         ct = resp.headers['Content-Type']
-        maintype, subtype, params = re.match('(\w+)/([\.\+\w]+)(;.*)?', ct).groups()
+        maintype, subtype, params = re.match(
+            '(\w+)/([\.\+\w]+)(;.*)?', ct).groups()
         img = Image(value=obj, format=subtype)
         self.data = img
         return img
-        
+
+
 class JSONResponseView(ResponseView):
     """
     A view that renders JSON in some semi-pretty form in an ipywidgets.Textarea.
@@ -163,14 +173,15 @@ class JSONResponseView(ResponseView):
 
     def render(self, resp: requests.models.Response) -> Textarea:
         "Return a somewhat prettified JSON string."
-        
+
         obj = resp.json()
         self.data = obj
         layout = Layout(width='100%', height='100px')
         ta = Textarea(layout=layout)
         ta.value = json.dumps(obj, indent=2)
         return ta
-    
+
+
 class GeoJSONResponseView(ResponseView):
     """
     A view that renders GeoJSON on an ipyleaflet.Map.
@@ -193,10 +204,11 @@ class GeoJSONResponseView(ResponseView):
         self.data = m
         return m
 
+
 class Scatter3DResponseView(ResponseView):
     """
     A view that renders 3D scatter plot data as dots in an ipyvolume widget.
-    
+
     The data source is expected to be a table with three or more columns
     of which the first three are taken to by x, y, and z.
     """
@@ -209,12 +221,13 @@ class Scatter3DResponseView(ResponseView):
         f = io.BytesIO(resp.content)
         points = pd.read_csv(f, delim_whitespace=True)
         # points = points[:: 300] # FIXME: use down-sampling here
-        x = points.iloc[:,0].values
-        y = points.iloc[:,1].values
-        z = points.iloc[:,2].values
+        x = points.iloc[:, 0].values
+        y = points.iloc[:, 1].values
+        z = points.iloc[:, 2].values
         res = ipyvolume.quickscatter(x, y, z, size=1, marker="sphere")
 
         return res
+
 
 class ProtobufResponseView(ResponseView):
     """
@@ -222,7 +235,7 @@ class ProtobufResponseView(ResponseView):
     """
     name = 'Protobuf'
     mimetype_pats = ['application/x\-protobuf']
-    
+
     def render(self, resp: requests.models.Response) -> Textarea:
         "Return deserialized Protobuf objects as text inside a Textarea."
 
@@ -238,6 +251,7 @@ class ProtobufResponseView(ResponseView):
 
 # A list of all built-in ResponseView subclasses in this module:
 
+
 builtin_view_classes = [
-    n for (k, n) in globals().items() 
-        if type(n)== type and issubclass(n, ResponseView) and n != ResponseView]
+    n for (k, n) in globals().items()
+    if type(n) == type and issubclass(n, ResponseView) and n != ResponseView]

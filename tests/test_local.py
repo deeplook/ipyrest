@@ -36,7 +36,8 @@ def test_vcr():
     from ipyrest import Api, recorder
     server = 'http://localhost:5000'
     cassette_path = 'cassette3.yaml'
-    Api(f'{server}/get_header', cassette_path=cassette_path, click_send=True) # get_json
+    Api(f'{server}/get_header', cassette_path=cassette_path,
+        click_send=True)  # get_json
     assert exists(join(recorder.cassette_library_dir, cassette_path))
 
 
@@ -58,12 +59,12 @@ def test_timeout():
     server = 'http://localhost:5000'
     Api(f'{server}/get_slow/sleep/1.0', click_send=True)
     assert True
-    
+
 
 @pytest.mark.skipif(SERVER_NOT_FOUND, reason="API server not found.")
 def test_do_timeout():
     "Do timeout."
-    
+
     # Tried with pytest.raises(Exception), but no luck:
     # https://stackoverflow.com/questions/23337471/how-to-properly-assert-that-an-exception-gets-raised-in-pytest#29855337
 

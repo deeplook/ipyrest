@@ -8,11 +8,11 @@ from ipywidgets import Widget, Tab
 class ExtendedTab(Tab):
     """
     A Tab subclass that allows to add/access/select/replace/remove children by name.
-    
+
     There can be only one tab for any given name.
 
     Example:
-    
+
         import time
         t = ExtendedTab([])
         t.add_child_named(Text('Some text'), 'A')
@@ -24,7 +24,8 @@ class ExtendedTab(Tab):
         t.selected_index = 0
         time.sleep(1)
         t.remove_child_named('A')
-    """    
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.children_dict = OrderedDict()
@@ -38,13 +39,13 @@ class ExtendedTab(Tab):
                 if i >= num_titles:
                     break
                 self.set_title(i, titles[i])
-        
+
     def add_child_named(self, child: Widget, name: str) -> None:
         "Add a new child widget under some name to the compound one."
 
         self.children_dict[name] = child
         self.children = tuple(self.children_dict.values())
-        self.set_title(len(self.children) - 1, name)    
+        self.set_title(len(self.children) - 1, name)
 
     def get_child_named(self, name: str) -> Widget:
         "Get child widget with given name."
@@ -72,6 +73,6 @@ class ExtendedTab(Tab):
 
     def replace_child_named(self, name: str, child: Widget) -> None:
         "Replace a child widget with some name in the compound one."
-        
+
         self.children_dict[name] = child
         self.children = tuple(self.children_dict.values())

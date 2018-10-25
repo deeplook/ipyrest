@@ -13,11 +13,11 @@ def test_jupyter():
     from ipyrest import Api
     url = 'https://jupyter.org'
     api = Api(url, click_send=True)
-    
+
     assert api.url_txt.value == url
     assert api.resp.status_code == 200
 
-    
+
 def test_google_header():
     "Get response header of google.com."
 
@@ -25,13 +25,13 @@ def test_google_header():
     from ipyrest import Api
     url = 'http://google.com'
     api = Api(url, click_send=True)
-    
+
     assert api.url_txt.value == url
 
     h = json.loads(api.resp_pane.get_child_named('Headers').value)
     assert h["Content-Type"] == "text/html; charset=UTF-8"
 
-    
+
 def test_here_maptile_image():
     "Get maptile image from HERE.com."
 
@@ -50,11 +50,11 @@ def test_here_maptile_image():
         format='png8',
     )
     params = dict(
-        app_id=os.getenv('HEREMAPS_APP_ID'), 
+        app_id=os.getenv('HEREMAPS_APP_ID'),
         app_code=os.getenv('HEREMAPS_APP_CODE'),
         ppi='320',
     )
-    
+
     # This needs to build the final URL, first, from the args and params
     # before sending the request! We simulate this here:
     url = url.format(**args)
@@ -65,5 +65,6 @@ def test_here_maptile_image():
     # This should do it all by itself:
     # api = Api(url, args=args, params=params, click_send=True)
 
-    img = api.resp_pane.get_child_named('Content').get_child_named('Image').value
+    img = api.resp_pane.get_child_named(
+        'Content').get_child_named('Image').value
     assert img.startswith(b'\x89PNG\r\n')

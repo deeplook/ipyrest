@@ -23,7 +23,7 @@ import timeout_decorator
 import ipyleaflet
 import ipywidgets as widgets
 from ipywidgets import (Widget, HBox, VBox, Text, Textarea, Dropdown,
-    Button, Layout, Tab, Image, HTML)
+                        Button, Layout, Tab, Image, HTML)
 from typing import Dict, Tuple, List, Union, Optional, Any, Callable
 
 from .extendedtab import ExtendedTab
@@ -50,7 +50,8 @@ class MyLogger(object):
         logger_handler.setLevel(logging.INFO)
 
         # Create a Formatter for formatting the log messages
-        logger_formatter = logging.Formatter('%(asctime)-15s - %(name)s - %(levelname)s - %(message)s')
+        logger_formatter = logging.Formatter(
+            '%(asctime)-15s - %(name)s - %(levelname)s - %(message)s')
 
         # Add the Formatter to the Handler
         logger_handler.setFormatter(logger_formatter)
@@ -63,12 +64,12 @@ class MyLogger(object):
         #     self.logger.info('Shutting down logger...')
 
 
-def execute_request(url: str, 
-                    method: str = 'get', 
-                    headers: Dict = {}, 
-                    params: Dict = {}, 
+def execute_request(url: str,
+                    method: str = 'get',
+                    headers: Dict = {},
+                    params: Dict = {},
                     json: Dict = {},
-                    
+
                     recorder: Optional[vcr.VCR] = recorder,
                     cassette_path: str = '',
                     logger: Optional[MyLogger] = None) -> Tuple[requests.models.Response, bool]:
@@ -76,7 +77,8 @@ def execute_request(url: str,
     Execute a HTTP request and return response defined by the `requests` package.
     """
     if logger:
-        logger.logger.info('execute_request {} {}'.format(recorder, cassette_path))
+        logger.logger.info(
+            'execute_request {} {}'.format(recorder, cassette_path))
 
     is_cached = False
     method_func = requests.__getattribute__(method.lower())
@@ -84,7 +86,8 @@ def execute_request(url: str,
         from vcr.cassette import Cassette
         from vcr.request import Request
         logger.logger.info('imported vcr')
-        req = Request(method.upper(), url, 'irrelevant body?', {'some': 'header'})
+        req = Request(method.upper(), url,
+                      'irrelevant body?', {'some': 'header'})
         logger.logger.info('req ' + str(req))
         c_path = os.path.join(recorder.cassette_library_dir, cassette_path)
         logger.logger.info(c_path)
@@ -100,17 +103,20 @@ def execute_request(url: str,
     # FIXME: requests.post('http://httpbin.org/post', json={"key": "value"})
     return resp, is_cached
 
+
 def mask_credentials(text: str, field_names: List[str]) -> str:
     "Mask out credentials params in a string, here an URL query string."
-    
+
     for name in field_names:
         text = re.sub(f'{name}=[\-\w]+', f'{name}=******', text)
     return text
+
 
 class Api(VBox):
     """
     Return a widget that mimics a Postman-like interface for exploring APIs.
     """
+
     def __init__(self,
                  url: str = '',
                  method: str = 'get',
@@ -119,14 +125,14 @@ class Api(VBox):
                  data: Dict = {},
                  headers: Dict = {},
                  cookies: Dict = {},
-                 
+
                  click_send: bool = False,
                  timeout: float = 10,
                  cassette_path: str = '',
                  views: List[ResponseView] = builtin_view_classes,
                  additional_views: List[ResponseView] = [],
                  post_process_resp: Optional[Callable] = None,
-                 config = None) -> None: # FIXME: use config
+                 config=None) -> None:  # FIXME: use config
         """
         Build widget layout and wire its components.
         """
@@ -139,18 +145,18 @@ class Api(VBox):
         self.data = data
         self.headers = headers
         self.cookies = cookies
-        
+
         self.timeout = timeout
         self.cassette_path = cassette_path
-        
+
         self.views = views + additional_views
         self.viewers = OrderedDict({})
         self.post_process_resp = post_process_resp
         self.logger = MyLogger()
 
-        lt_w100p = Layout(width='100%') # , height='100px')
+        lt_w100p = Layout(width='100%')  # , height='100px')
         lt_w100px = Layout(width='100%px')
-        
+
         # top input line with URL field
         opts = 'GET POST PUT PATCH DELETE HEAD OPTIONS'.split()
         self.method_ddn = Dropdown(
@@ -160,15 +166,16 @@ class Api(VBox):
         self.url_txt = Text(layout=lt_w100p)
         self.req_btn = Button(description='REQ', tooltip='Show Request Pane')
         self.rep_btn = Button(description='REP', tooltip='Show Response Pane')
-        self.send_btn = Button(description='Send', tooltip='Send request', button_style='primary')
+        self.send_btn = Button(
+            description='Send', tooltip='Send request', button_style='primary')
         self.input_hbx = HBox([
-                self.method_ddn, 
-                self.url_txt,
-                self.req_btn,
-                self.rep_btn,
-                self.send_btn],
+            self.method_ddn,
+            self.url_txt,
+            self.req_btn,
+            self.rep_btn,
+            self.send_btn],
             layout=lt_w100p)
-        
+
         # request pane
         self.showing_req_pane = False
         self.req_pane = ExtendedTab()
@@ -195,7 +202,7 @@ class Api(VBox):
         self.resp_pane.add_child_named(self.content_area, 'Content')
         self.resp_pane.add_child_named(Textarea(layout=lt_w100p), 'Headers')
         self.resp_pane.add_child_named(Textarea(layout=lt_w100p), 'Cookies')
-    
+
         # interactions
         self.req_btn.on_click(self.req_clicked)
         self.rep_btn.on_click(self.rep_clicked)
@@ -212,8 +219,8 @@ class Api(VBox):
         if self.showing_rep_pane:
             ui_kids += [self.resp_htm, self.resp_pane]
         self.children = ui_kids
-        
-        # fill in default arguments and parameters if given        
+
+        # fill in default arguments and parameters if given
         if url:
             if args:
                 url = url.format(**args)
@@ -226,14 +233,14 @@ class Api(VBox):
             [Text(description=key, value=args[key]) for key in args]
         self.req_pane.get_child_named('Parameters').children = \
             [Text(description=key, value=params[key]) for key in params]
-        
+
         # finally, click send button if desired
         if click_send:
             self.click_send()
-        
+
     def url_changed(self, change) -> None:
         "Callback to be called when the input URL is changed."
-        
+
         value = change['new']
         try:
             q = splitquery(value)[1]
@@ -268,36 +275,38 @@ class Api(VBox):
         self.showing_req_pane = not self.showing_req_pane
         self.update_ui()
         btn.tooltip = 'Hide Request Pane' if self.showing_req_pane else 'Show Request Pane'
-   
+
     def rep_clicked(self, btn: Button) -> None:
         "Callback to be called when the Response button is clicked."
 
         self.showing_rep_pane = not self.showing_rep_pane
         self.update_ui()
         btn.tooltip = 'Hide Response Pane' if self.showing_rep_pane else 'Show Response Pane'
-        
+
     def send_clicked(self, btn: Button) -> None:
         "Callback to be called when the Send button is clicked."
-        
+
         btn.button_style = 'info'
         btn.disabled = True
         self.logger.logger.info('clicked')
         url = self.url_txt.value
         method = self.method_ddn.value
-        
+
         headers_text = self.req_pane.get_child_named('Headers').value
         headers = json.loads(headers_text) if headers_text.strip() else {}
 
         data_text = self.req_pane.get_child_named('Data').value
         data = json.loads(data_text) if data_text.strip() else {}
-            
+
         args = [url, method]
-        kwargs = dict(headers=headers, cassette_path=self.cassette_path, logger=self.logger)
+        kwargs = dict(headers=headers,
+                      cassette_path=self.cassette_path, logger=self.logger)
         if data:
             kwargs['json'] = data
         self.logger.logger.info('vcr request {} {}'.format(args, kwargs))
         if 1:
-            timeout_execute_request = timeout_decorator.timeout(self.timeout)(execute_request)
+            timeout_execute_request = timeout_decorator.timeout(
+                self.timeout)(execute_request)
             try:
                 self.logger.logger.info('callign timeout_execute_request')
                 self.resp, is_cached = timeout_execute_request(*args, **kwargs)
@@ -305,15 +314,16 @@ class Api(VBox):
             except timeout_decorator.TimeoutError:
                 self.logger.logger.info('timed out')
                 self.resp_htm = HBox([
-                        HTML('Response'),
-                        HTML('Status: Timed out after {:.3f} secs.'.format(self.timeout))
-                    ],
+                    HTML('Response'),
+                    HTML('Status: Timed out after {:.3f} secs.'.format(
+                        self.timeout))
+                ],
                     layout=Layout(width='100%', justify_content='space-between'))
                 raise
         else:
             self.resp, is_cached = execute_request(*args, **kwargs)
         self.logger.logger.info(self.resp.content)
-        
+
         if self.post_process_resp:
             self.post_process_resp(self.resp)
         btn.button_style = 'primary'
@@ -325,9 +335,9 @@ class Api(VBox):
                       is_cached: bool,
                       views: Optional[List[ResponseView]] = None) -> None:
         "Show the HTTP response in various response UI elements."
-        
+
         self.logger.logger.info('response ' + str(resp.headers))
-        
+
         content_tab = self.resp_pane.get_child_named('Content')
 
         # Raw tab
@@ -338,16 +348,21 @@ class Api(VBox):
         self.viewers['Raw'] = viewer
         content_tab.get_child_named('Raw').value = \
             str(resp.content.decode(resp.encoding)) \
-                if resp.encoding else str(resp.content)
+            if resp.encoding else str(resp.content)
         content_tab.select_child_named('Raw')
-        sorted_header_items = OrderedDict(sorted(OrderedDict(resp.headers).items()))
-        self.resp_pane.get_child_named('Headers').value = json.dumps(sorted_header_items, indent=2)
-        self.resp_pane.get_child_named('Cookies').value = str(resp.cookies.items())
+        sorted_header_items = OrderedDict(
+            sorted(OrderedDict(resp.headers).items()))
+        self.resp_pane.get_child_named('Headers').value = json.dumps(
+            sorted_header_items, indent=2)
+        self.resp_pane.get_child_named(
+            'Cookies').value = str(resp.cookies.items())
 
         content_type = resp.headers['Content-Type']
-        maintype, subtype, params = re.match('(\w+)/([\.\+\-\w]+)(;.*)?', content_type).groups()
+        maintype, subtype, params = re.match(
+            '(\w+)/([\.\+\-\w]+)(;.*)?', content_type).groups()
         essence = f'{maintype}/{subtype}'
-        self.logger.logger.info(f'maintype: {maintype}, subtype: {subtype}, params: {params}')
+        self.logger.logger.info(
+            f'maintype: {maintype}, subtype: {subtype}, params: {params}')
         self.logger.logger.info(f'essence: {essence}')
         self.resp_pane.selected_index = 0
         self.showing_rep_pane = True
@@ -356,18 +371,18 @@ class Api(VBox):
         kwargs = dict(
             code=resp.status_code,
             reason=resp.reason,
-            encoding=resp.encoding, 
-            elapsed='{:.3f}'.format(resp.elapsed.total_seconds()), 
+            encoding=resp.encoding,
+            elapsed='{:.3f}'.format(resp.elapsed.total_seconds()),
             # length=resp.headers['Content-Length'],
             length=resp.headers.get('Content-Length', '?'),
             cached=is_cached
         )
         self.resp_htm = HBox([
             HTML('Response'),
-            HTML(('Status: {code}/{reason}, Encoding: {encoding}, '\
-                 'Time: {elapsed} secs, Length: {length} Bytes, Cached: {cached}').format(**kwargs))
+            HTML(('Status: {code}/{reason}, Encoding: {encoding}, '
+                  'Time: {elapsed} secs, Length: {length} Bytes, Cached: {cached}').format(**kwargs))
         ],
-        layout=Layout(width='100%', justify_content='space-between'))
+            layout=Layout(width='100%', justify_content='space-between'))
 
         # find views able to render the response and add their results to the tab
         for ViewClass in views or self.views:
