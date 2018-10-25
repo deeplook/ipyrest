@@ -65,7 +65,13 @@ Issues:
 Installation
 ------------
 
-Not yet...
+For the time being you can install Ipyrest either directly from GitHub or after downloading/cloning and unpacking it like this in its top-level directory:
+
+```
+pip install git+https://github.com/deeplook/ipyrest
+
+pip install -e .
+```
 
 Testing
 -------
