@@ -1,6 +1,6 @@
 from ipywidgets import Text, Button
 
-from extendedtab import ExtendedTab
+from ipyrest.extendedtab import ExtendedTab
 
 
 def test_extended_tab():
