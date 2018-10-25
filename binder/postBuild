@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# install local ipyrest package
+pip install -e .

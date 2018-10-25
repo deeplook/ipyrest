@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
+
 """
-This is a Postman-like IPyWidgets pseudo widget for exploring Rest APIs.
+This is a Postman-like IPyWidgets compound widget for exploring Rest APIs.
 It aims at providing more flexible options for customization and adding
 custom views to display e.g. GeoJSON and image responses directly in
 the interface. These should at some point also include UI widgets like
@@ -24,8 +26,8 @@ from ipywidgets import (Widget, HBox, VBox, Text, Textarea, Dropdown,
     Button, Layout, Tab, Image, HTML)
 from typing import Dict, Tuple, List, Union, Optional, Any, Callable
 
-from extendedtab import ExtendedTab
-from responseviews import RawResponseView, ResponseView, builtin_view_classes 
+from .extendedtab import ExtendedTab
+from .responseviews import RawResponseView, ResponseView, builtin_view_classes
 
 
 # default recorder

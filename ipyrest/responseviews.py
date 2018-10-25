@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Default ResponseView classes for ipyrest.
 """
@@ -239,7 +241,3 @@ class ProtobufResponseView(ResponseView):
 builtin_view_classes = [
     n for (k, n) in globals().items() 
         if type(n)== type and issubclass(n, ResponseView) and n != ResponseView]
-
-# builtin_view_classes_dict = OrderedDict({k: n
-#     for (k, n) in globals().items() 
-#         if type(n)== type and issubclass(n, ResponseView) and n != ResponseView})
