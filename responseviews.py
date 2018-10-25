@@ -210,7 +210,7 @@ class Scatter3DResponseView(ResponseView):
         x = points.iloc[:,0].values
         y = points.iloc[:,1].values
         z = points.iloc[:,2].values
-        res = ipyvolume.quickscatter(x, y, z, size=.25, marker="sphere")
+        res = ipyvolume.quickscatter(x, y, z, size=1, marker="sphere")
 
         return res
 
