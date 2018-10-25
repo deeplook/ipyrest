@@ -81,7 +81,7 @@ Just make sure you have `pytest` installed and run `PYTHONPATH=. pytest -s -v te
 Documentation
 -------------
 
-Not yet... At the moment it is recommended to look at [`meetup.ipynb`](meetup.ipynb), mostly a tutorial-like collection of examples given as a presentation at a meetup.
+The `docs` folder is only a stub for now. At the moment it is recommended to look at [`examples/meetup.ipynb`](examples/meetup.ipynb), mostly a tutorial-like collection of examples given as a presentation at a meetup. Some of these need appropriate API keys.
 
 How to Contribute
 -----------------
