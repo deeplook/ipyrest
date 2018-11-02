@@ -100,8 +100,11 @@ class RawResponseView(object):
         self.data = obj
         layout = Layout(width='100%', height='100px')
         ta = Textarea(layout=layout)
-        ta.value = str(resp.content.decode(resp.encoding)) \
-            if resp.encoding else str(resp.content)
+        try:
+            ta.value = str(resp.content.decode(resp.encoding)) \
+                if resp.encoding else str(resp.content)
+        except UnicodeDecodeError:
+            ta.value = str(resp.content)
         return ta
 
 

@@ -346,9 +346,12 @@ class Api(VBox):
         viewer.render(resp)
         self.logger.logger.info('0')
         self.viewers['Raw'] = viewer
-        content_tab.get_child_named('Raw').value = \
-            str(resp.content.decode(resp.encoding)) \
-            if resp.encoding else str(resp.content)
+        try:
+            content_tab.get_child_named('Raw').value = \
+                str(resp.content.decode(resp.encoding)) \
+                if resp.encoding else str(resp.content)
+        except UnicodeDecodeError:
+            content_tab.get_child_named('Raw').value = str(resp.content)
         content_tab.select_child_named('Raw')
         sorted_header_items = OrderedDict(
             sorted(OrderedDict(resp.headers).items()))
