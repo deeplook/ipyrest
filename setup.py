@@ -15,7 +15,7 @@ requirements = open('requirements.txt').read().strip().split('\n')
 
 setup_requirements = ['pytest-runner', ]
 
-test_requirements = ['pytest', ]
+test_requirements = requirements + ['pytest', ]
 
 setup(
     author="Dinu Gherman",
