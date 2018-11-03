@@ -98,7 +98,7 @@ class RawResponseView(object):
 
         obj = resp.content
         self.data = obj
-        layout = Layout(width='100%', height='100px')
+        layout = Layout(width='100%', height='100%')
         ta = Textarea(layout=layout)
         try:
             ta.value = str(resp.content.decode(resp.encoding)) \
@@ -179,7 +179,7 @@ class JSONResponseView(ResponseView):
 
         obj = resp.json()
         self.data = obj
-        layout = Layout(width='100%', height='100px')
+        layout = Layout(width='100%', height='100%')
         ta = Textarea(layout=layout)
         ta.value = json.dumps(obj, indent=2)
         return ta
@@ -247,7 +247,7 @@ class ProtobufResponseView(ResponseView):
         person = addressbook_pb2.Person()
         person.ParseFromString(obj)
         self.data = person
-        layout = Layout(width='100%', height='100px')
+        layout = Layout(width='100%', height='100%')
         ta = Textarea(layout=layout)
         ta.value = str(person)
         return ta
