@@ -15,13 +15,15 @@ import urllib
 import logging
 from math import log, fabs
 from collections import OrderedDict
-from urllib.parse import parse_qs, splitquery
+from urllib.parse import (parse_qs, parse_qsl, splitquery,
+                          urlparse, urlunparse)
 
 import vcr
 import requests
 import timeout_decorator
 import ipyleaflet
 import ipywidgets as widgets
+from traitlets import All
 from ipywidgets import (Widget, HBox, VBox, Text, Textarea, Dropdown,
                         Button, Layout, Tab, Image, HTML)
 from typing import Dict, Tuple, List, Union, Optional, Any, Callable
@@ -110,6 +112,19 @@ def mask_credentials(text: str, field_names: List[str]) -> str:
     for name in field_names:
         text = re.sub(f'{name}=[\-\w]+', f'{name}=******', text)
     return text
+
+
+def update_qs(url, **kwargs):
+    "Update parameters in URL query string as given in kwargs."
+
+    # values in kwargs must be lists containing at least one string
+    query_dct = parse_qs(urlparse(url).query)
+    query_dct.update(kwargs)
+    qs_new = '&'.join('{}={}'.format(k, v[0]) for (k, v) in query_dct.items())
+    url_parts = list(urlparse(url))
+    url_parts[4] = qs_new
+    new_url = urlunparse(url_parts)
+    return new_url
 
 
 class Api(VBox):
@@ -231,8 +246,11 @@ class Api(VBox):
 
         self.req_pane.get_child_named('Arguments').children = \
             [Text(description=key, value=args[key]) for key in args]
-        self.req_pane.get_child_named('Parameters').children = \
-            [Text(description=key, value=params[key]) for key in params]
+        param_texts = [Text(description=key, value=params[key]) for key in params]
+        for pt in param_texts:
+            pt.observe(self.param_changed, names=All)
+
+        self.req_pane.get_child_named('Parameters').children = param_texts
 
         # finally, click send button if desired
         if click_send:
@@ -252,7 +270,15 @@ class Api(VBox):
 
     def param_changed(self, change) -> None:
         "Callback to be called when an input parameter is changed."
-        ...
+
+        self.logger.logger.info('old url {}'.format(self.url_txt.value))
+        key = change['owner'].description
+        value = change['new']
+        new_url = update_qs(self.url_txt.value, **{key: [value]})
+        self.url = new_url
+        self.url_txt.value = new_url
+        self.logger.logger.info('param_changed {} {}'.format(key, value))
+        self.logger.logger.info('new url {}'.format(self.url_txt.value))
 
     def click_send(self) -> None:
         "Programmatically click on Send button."
