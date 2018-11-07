@@ -18,7 +18,7 @@ from typing import Optional
 from ipyrest import Api
 
 
-def get_postman_widget(module: ModuleType) -> Optional[Api]:
+def get_ipyrest_widget(module: ModuleType) -> Optional[Api]:
     "Return one Api widget inside a given module, if present, or None."
 
     for (name, obj) in module.__dict__.items():
@@ -31,13 +31,13 @@ def test_usecase_jupyter_header():
     "Run dynamic test for external module."
 
     import usecase_jupyter_header as usecase
-    pmw = get_postman_widget(usecase)
+    w = get_ipyrest_widget(usecase)
 
     import json
 
-    assert pmw.url_txt.value == pmw.url
+    assert w.url_txt.value == w.url
 
-    h = json.loads(pmw.resp_pane.get_child_named('Headers').value)
+    h = json.loads(w.resp_pane.get_child_named('Headers').value)
     assert h["Content-Type"] == "text/html; charset=utf-8"
 
 
@@ -45,9 +45,9 @@ def test_usecase_here_geocoder():
     "Run dynamic test for external module."
 
     import usecase_here_geocoder as usecase
-    pmw = get_postman_widget(usecase)
+    w = get_ipyrest_widget(usecase)
 
-    exp = {'Latitude': 52.5308599, 'Longitude': 13.38474}
-    res = pmw.resp.json()[
+    exp = {'Latitude': 52.53086, 'Longitude': 13.38474}
+    res = w.resp.json()[
         'Response']['View'][0]['Result'][0]['Location']['DisplayPosition']
     assert res == exp
