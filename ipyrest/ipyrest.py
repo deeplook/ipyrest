@@ -98,10 +98,16 @@ def execute_request(url: str,
             is_cached = True
         with recorder.use_cassette(c_path):
             logger.logger.info('running...')
-            resp = method_func(url, headers=headers, params=params, json=json)
+            if json:
+                resp = method_func(url, headers=headers, params=params, json=json)
+            else:
+                resp = method_func(url, headers=headers, params=params)
             logger.logger.info('got it...')
     else:
-        resp = method_func(url, headers=headers, params=params, json=json)
+        if json:
+            resp = method_func(url, headers=headers, params=params, json=json)
+        else:
+            resp = method_func(url, headers=headers, params=params)
     # FIXME: requests.post('http://httpbin.org/post', json={"key": "value"})
     return resp, is_cached
 

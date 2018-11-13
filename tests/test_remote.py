@@ -7,6 +7,17 @@ To be executed with pytest:
 """
 
 
+def test_osm_tile():
+    "Get PNG tile from tile.osm.org."
+
+    from ipyrest import Api
+    url = 'http://tile.osm.org/0/0/0.png'
+    api = Api(url, click_send=True)
+
+    assert api.url_txt.value == url
+    assert api.resp.status_code == 200
+
+
 def test_jupyter():
     "Get body of jupyter.org."
 
@@ -29,7 +40,7 @@ def test_google_header():
     assert api.url_txt.value == url
 
     h = json.loads(api.resp_pane.get_child_named('Headers').value)
-    assert h["Content-Type"] == "text/html; charset=UTF-8"
+    assert h["Content-Type"] == "text/html; charset=ISO-8859-1"
 
 
 def test_here_maptile_image():
