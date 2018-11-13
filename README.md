@@ -1,6 +1,6 @@
 # Ipyrest
 
-[![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/deeplook/ipyrest/master) 
+[![Binder](https://mybinder.org/badge_logo.svg)](http://beta.mybinder.org/v2/gh/deeplook/ipyrest/master) 
 [![Nbviewer](https://github.com/jupyter/design/blob/master/logos/Badges/nbviewer_badge.svg)](http://nbviewer.jupyter.org/github/deeplook/ipyrest/tree/master/)
 
 Ipyrest is an emerging Jupyter notebook widget for exploring RESTful APIs. It has two main goals: provide a more convenient interface in the spirit of Postman, and allow to plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON:
