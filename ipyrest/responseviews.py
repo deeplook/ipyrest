@@ -105,6 +105,8 @@ class RawResponseView(object):
                 if resp.encoding else str(resp.content)
         except UnicodeDecodeError:
             ta.value = str(resp.content)
+        num_lines = ta.value.count('\n')
+        ta.rows = min(10, num_lines + 1)
         return ta
 
 
@@ -181,7 +183,10 @@ class JSONResponseView(ResponseView):
         self.data = obj
         layout = Layout(width='100%', height='100%')
         ta = Textarea(layout=layout)
-        ta.value = json.dumps(obj, indent=2)
+        value = json.dumps(obj, indent=2)
+        ta.value = value
+        num_lines = value.count('\n')
+        ta.rows = min(10, num_lines + 1)
         return ta
 
 
