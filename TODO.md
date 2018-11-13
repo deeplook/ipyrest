@@ -22,6 +22,7 @@ To-do:
 - concentrate init params for Api class into configuration object
 - describe init params in Api class' decstring
 - learn more from https://github.com/oschuett/appmode to add an even better binder integration
+- support GPX format (XML)
 
 Done:
 
