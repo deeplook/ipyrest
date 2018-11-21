@@ -18,6 +18,7 @@ import ipyleaflet
 import pandas as pd
 from ipywidgets import (Widget, HBox, VBox, Text, Textarea,
                         Button, Layout, Tab, Image, HTML)
+from qgrid import QGridWidget
 
 
 # Bounding box functions related to GeoJSONResponseView
@@ -188,6 +189,23 @@ class JSONResponseView(ResponseView):
         num_lines = value.count('\n')
         ta.rows = min(10, num_lines + 1)
         return ta
+
+
+class CSVResponseView(ResponseView):
+    """
+    A view that renders CSV data as an interactive table
+    """
+    name = 'CSV'
+    mimetype_pats = ['text/csv']
+
+    def render(self, resp: requests.models.Response) -> QGridWidget:
+        "Return an interactive grid with the CSV data"
+
+        csv = io.StringIO(resp.text)
+        df = pd.read_csv(csv)
+        self.data = df
+        grid = QGridWidget(df=df)
+        return grid
 
 
 class GeoJSONResponseView(ResponseView):
