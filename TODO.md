@@ -22,7 +22,6 @@ To-do:
 - concentrate init params for Api class into configuration object
 - describe init params in Api class' decstring
 - learn more from https://github.com/oschuett/appmode to add an even better binder integration
-- support GPX format (XML)
 
 Done:
 
@@ -55,6 +54,7 @@ Done:
 - provide a test-suite for testing the widgets programmatically (no browser needed)
 - implement views to render specific mime-types
 - allow for customized response views (e.g. show a route from the HERE API)
+- support GPX format (XML)
 
 Mabye:
 
