@@ -387,8 +387,10 @@ class Api(VBox):
         content_tab.select_child_named('Raw')
         sorted_header_items = OrderedDict(
             sorted(OrderedDict(resp.headers).items()))
-        self.resp_pane.get_child_named('Headers').value = json.dumps(
-            sorted_header_items, indent=2)
+        headers_ta = self.resp_pane.get_child_named('Headers')
+        headers_ta.value = json.dumps(sorted_header_items, indent=2)
+        num_lines = headers_ta.value.count('\n')
+        headers_ta.rows = min(10, num_lines + 1)
         self.resp_pane.get_child_named(
             'Cookies').value = str(resp.cookies.items())
 
