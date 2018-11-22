@@ -151,6 +151,31 @@ def get_svg() -> str:
     return resp
 
 
+gpx_body = '''\
+<?xml version="1.0"?>
+<gpx version="1.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://www.topografix.com/GPX/1/0"
+xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
+  <trk>
+    <trkseg>
+      <trkpt lat="51.10177" lon="0.39349"/>
+      <trkpt lat="51.10181" lon="0.39335"/>
+      <trkpt lat="51.10255" lon="0.39369"/>
+      <trkpt lat="51.10398" lon="0.39466"/>
+      <trkpt lat="51.10501" lon="0.39533"/>
+    </trkseg>
+  </trk>
+</gpx>
+'''
+# gpx_body = open('/Volumes/SanDisk128/mobiledev/src/projects/herestapis_comtravo/data/bus_ride.gpx').read()
+@app.route('/get_gpx')
+def get_gpx() -> str:
+    resp = app.make_response(gpx_body)
+    resp.mimetype = "application/gpx+xml"
+    return resp
+
+
 # POST
 
 @app.route("/post_data_echo", methods=['POST'])

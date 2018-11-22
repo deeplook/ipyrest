@@ -28,6 +28,15 @@ def test_empty():
     assert True
 
 
+@pytest.mark.skipif(SERVER_NOT_FOUND, reason="API server not found.")
+def test_gpx():
+    "Make simple GPX request."
+
+    from ipyrest import Api
+    server = 'http://localhost:5000'
+    Api(f'{server}/get_gpx', click_send=True)
+
+
 # @pytest.mark.skip(reason="Not ready yet.")
 @pytest.mark.skipif(SERVER_NOT_FOUND, reason="API server not found.")
 def test_vcr():

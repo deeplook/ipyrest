@@ -213,6 +213,45 @@ class GeoJSONResponseView(ResponseView):
         return m
 
 
+class GPXResponseView(ResponseView):
+    """
+    A view that renders GPS traces in GPX format on an ipyleaflet.Map.
+
+    See https://www.topografix.com/gpx.asp
+    """
+    name = 'GPX'
+    mimetype_pats = ['application/gpx\+xml']
+
+    def render(self, resp: requests.models.Response) -> ipyleaflet.Map:
+        "Return an ipyleaflet map with the GPX object rendered on it, or None."
+
+        import gpxpy
+        from gpxpy.gpx import GPXXMLSyntaxException
+
+        obj = resp.content.decode('utf-8')
+        try:
+            trace = gpxpy.parse(obj)
+        except GPXXMLSyntaxException:
+            return None
+        pts = [p.point for p in trace.get_points_data()]
+        bbox = trace.get_bounds()
+        mins = (bbox.min_latitude, bbox.min_longitude)
+        maxs = (bbox.max_latitude, bbox.max_longitude)
+        bbox = mins, maxs
+        center = list(bbox_center(*bbox))
+        z = zoom_for_bbox(*(mins + maxs))
+        m = ipyleaflet.Map(center=center, zoom=z + 1)
+        # FIXME: make path styling configurable
+        poly = ipyleaflet.Polyline(locations=[(p.latitude, p.longitude)
+            for p in pts], fill=False)
+        m.add_layer(layer=poly)
+        for p in pts:
+            cm = ipyleaflet.CircleMarker(location=(p.latitude, p.longitude), radius=5)
+            m.add_layer(layer=cm)
+        self.data = m
+        return m
+
+
 class Scatter3DResponseView(ResponseView):
     """
     A view that renders 3D scatter plot data as dots in an ipyvolume widget.
@@ -257,8 +296,8 @@ class ProtobufResponseView(ResponseView):
         ta.value = str(person)
         return ta
 
-# A list of all built-in ResponseView subclasses in this module:
 
+# A list of all built-in ResponseView subclasses in this module:
 
 builtin_view_classes = [
     n for (k, n) in globals().items()
