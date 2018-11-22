@@ -2,3 +2,6 @@
 
 # install local ipyrest package
 pip install -e .
+
+# install JupyterLab extensions
+jupyter labextension install qgrid
