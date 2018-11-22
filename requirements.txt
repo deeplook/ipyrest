@@ -6,6 +6,7 @@ jinja2
 numpy
 pandas
 protobuf
+qgrid
 requests
 timeout_decorator
 typing
