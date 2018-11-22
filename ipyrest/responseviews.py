@@ -196,7 +196,7 @@ class CSVResponseView(ResponseView):
     A view that renders CSV data as an interactive table
     """
     name = 'CSV'
-    mimetype_pats = ['text/csv']
+    mimetype_pats = ['text/csv.*']
 
     def render(self, resp: requests.models.Response) -> QGridWidget:
         "Return an interactive grid with the CSV data"
