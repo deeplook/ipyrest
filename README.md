@@ -33,6 +33,7 @@ Concepts covered:
 Response views (plugins):
 
 - Text
+- CSV
 - HTML
 - Bitmaps
 - SVG
@@ -49,6 +50,7 @@ Main direct dependencies:
 - ipyleaflet
 - ipyvolume
 - geojson
+- qgrid
 - protobuf
 - timeout_decorator
 - requests
