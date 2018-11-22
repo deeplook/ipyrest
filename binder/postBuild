@@ -4,4 +4,5 @@
 pip install -e .
 
 # install JupyterLab extensions
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
 jupyter labextension install qgrid
