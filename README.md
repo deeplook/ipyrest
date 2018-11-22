@@ -39,6 +39,7 @@ Response views (plugins):
 - SVG
 - JSON
 - GeoJSON
+- GPX
 - Protobuf
 - 3D ?
 
