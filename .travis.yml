@@ -1,8 +1,7 @@
 language: python
-python:
-  - "3.6"
 matrix:
   include:
+    - python: 3.6
     - python: 3.7
       dist: xenial  # required for Python 3.7 (travis-ci/travis-ci#9069)
       sudo: true    # required for Python 3.7 (travis-ci/travis-ci#9069)
@@ -11,4 +10,4 @@ install:
   - pip install -r requirements_test.txt
   - pip install -e .
 script:
-  - pytest tests
+- pytest tests
