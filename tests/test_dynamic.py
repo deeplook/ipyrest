@@ -15,7 +15,7 @@ To be executed with pytest:
 from types import ModuleType
 from typing import Optional
 
-from ipyrest import Api
+from ..ipyrest import Api
 
 
 def get_ipyrest_widget(module: ModuleType) -> Optional[Api]:
