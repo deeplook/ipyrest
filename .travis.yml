@@ -4,4 +4,4 @@ python:
 install:
   - pip install tox-travis
 script:
-  - pytest
+  - travis_wait 30 tox
