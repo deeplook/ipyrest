@@ -80,7 +80,12 @@ pip install -e .
 Testing
 -------
 
-Just make sure you have `pytest` installed and run `PYTHONPATH=. pytest -s -v tests` in the root directory. Some tests will be skipped if you have not started a local webserver before with  `python tests/api_server.py` which implements a set of sample API endpoints for local testing. Some tests need keys/tokens defined as environment variables for the respective APIs being tested.
+Just make sure you have `pytest` installed and run `PYTHONPATH=. pytest -s -v tests`
+in the root directory. Some tests will automatically start a local webserver in
+`tests/api_server.py` which implements a set of sample API endpoints for local
+testing.
+
+Some tests need keys/tokens defined as environment variables for the respective APIs being tested. If not present these tests will be skipped.
 
 Documentation
 -------------

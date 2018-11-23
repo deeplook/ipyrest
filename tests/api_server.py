@@ -6,33 +6,36 @@ A simple HTTP server implementing a minimal RESTful API for testing ipyrest.
 
 import json
 import time
+from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
+from contextlib import closing
+from threading import Thread
 
 from flask import Flask, Response, request, jsonify, send_file
+
+
+def find_free_port() -> int:
+    "Return a free network port."
+
+    with closing(socket(AF_INET, SOCK_STREAM)) as s:
+        s.bind(('localhost', 0))
+        s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        return s.getsockname()[1]
+
+
+def run_flask_app(app: Flask, kwargs: dict, daemon: bool=True) -> None:
+    "Run a flask server app inside a thread."
+
+    t = Thread(target=app.run, kwargs=kwargs)
+    if daemon:
+        t.daemon = True
+    t.start()
+    time.sleep(1)
 
 
 app = Flask(__name__)
 
 
-# get html
-# get json
-# get geojson
-# get xml
-# get image
-
-# path params
-# query params
-# post data
-# mime-type
-# file upload
-
-# request.method == 'POST'
-# request.args
-# request.data
-# ...
-
-
 # In the app routes below, without any methods parameter the default one is 'GET'.
-
 
 # GET
 
@@ -198,4 +201,6 @@ def echo(subpath: str) -> str:
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = find_free_port()
+    kwargs = dict(host='0.0.0.0', port=port, debug=False)
+    run_flask_app(app, kwargs, daemon=False)
