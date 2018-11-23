@@ -2,6 +2,7 @@ language: python
 python:
   - "3.6"
 install:
-  - pip install tox-travis
+  - pip install -r requirements.txt
+  - pip install -r requirements_test.txt
 script:
-  - travis_wait 30 tox
+  - pytest tests
