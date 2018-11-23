@@ -11,9 +11,11 @@ To be executed with pytest:
     pytest -s -v test_dynamic.py
 """
 
-
+import os
 from types import ModuleType
 from typing import Optional
+
+import pytest
 
 from ipyrest import Api
 
@@ -41,6 +43,9 @@ def test_usecase_jupyter_header():
     assert h["Content-Type"] == "text/html; charset=utf-8"
 
 
+HAVE_HEREMAPS_CREDS = os.getenv('HEREMAPS_APP_ID', None) and os.getenv('HEREMAPS_APP_CODE', None) 
+
+@pytest.mark.skipif(not HAVE_HEREMAPS_CREDS, reason='Could not find HEREMAPS credentials.')
 def test_usecase_here_geocoder():
     "Run dynamic test for external module."
 
