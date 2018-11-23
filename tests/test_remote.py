@@ -6,6 +6,10 @@ To be executed with pytest:
     pytest -s -v test_remote.py
 """
 
+import os
+
+import pytest
+
 
 def test_osm_tile():
     "Get PNG tile from tile.osm.org."
@@ -42,11 +46,13 @@ def test_google_header():
     h = json.loads(api.resp_pane.get_child_named('Headers').value)
     assert h["Content-Type"] == "text/html; charset=ISO-8859-1"
 
+    
+HAVE_HEREMAPS_CREDS = os.getenv('HEREMAPS_APP_ID', None) and os.getenv('HEREMAPS_APP_CODE', None) 
 
+@pytest.mark.skipif(not HAVE_HEREMAPS_CREDS, reason='Could not find HEREMAPS credentials.')
 def test_here_maptile_image():
     "Get maptile image from HERE.com."
 
-    import os
     from ipyrest import Api
     url = 'https://1.{maptype}.maps.api.here.com/' \
           'maptile/2.1/{tiletype}/newest/{scheme}/{zoom}/{xtile}/{ytile}/{size}/{format}'
