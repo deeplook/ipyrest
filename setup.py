@@ -19,15 +19,16 @@ test_requirements = requirements + ['pytest', ]
 
 setup(
     author="Dinu Gherman",
-    author_email='gherman@darwin.in-berlin.de',
+    author_email='@'.join(['gherman', 'darwin.in-berlin.de']),
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     description="An emerging widget for exploring RESTful APIs in Jupyter notebooks.",
     install_requires=requirements,
