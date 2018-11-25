@@ -3,6 +3,9 @@
 # install local ipyrest package
 pip install -e .
 
+# enable notebook extensions
+jupyter nbextension enable --py --sys-prefix qgrid
+
 # install JupyterLab extensions
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 jupyter labextension install qgrid
