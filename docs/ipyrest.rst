@@ -4,6 +4,14 @@ ipyrest package
 Submodules
 ----------
 
+ipyrest.codegen module
+----------------------
+
+.. automodule:: ipyrest.codegen
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 ipyrest.extendedtab module
 --------------------------
 
@@ -24,6 +32,14 @@ ipyrest.responseviews module
 ----------------------------
 
 .. automodule:: ipyrest.responseviews
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ipyrest.utils module
+--------------------
+
+.. automodule:: ipyrest.utils
     :members:
     :undoc-members:
     :show-inheritance:

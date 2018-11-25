@@ -3,11 +3,15 @@ include CONTRIBUTING.rst
 include HISTORY.rst
 include LICENSE
 include README.md
-include requirements.txt
-include requirements_test.txt
+include requirements.txt requirements_test.txt
 
+recursive-include docs *.rst *.jpg *.png *.gif conf.py Makefile make.bat
+recursive-include examples *.ipynb
 recursive-include tests *
-recursive-exclude * __pycache__
-recursive-exclude * *.py[co]
 
-recursive-include docs *.rst conf.py Makefile make.bat *.jpg *.png *.gif
+recursive-exclude * *.py[co]
+recursive-exclude tests fixtures/cassettes/*
+recursive-exclude tests fixtures/*
+recursive-exclude examples non-dist/*
+
+global-exclude ipyrest.log __pycache__ .ipynb_checkpoints .mypy_cache
