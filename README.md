@@ -15,24 +15,24 @@ Ipyrest is an emerging Jupyter notebook widget for exploring RESTful APIs. It ha
 Features
 --------
 
-Ipyrest deals with the following concepts, implemented to varying degrees: Server, Service, Request, Response, Data, MIME-Type, Compression, Logging, Caching, Time-Out, Errors, Viewing, Plugins, Testing, and UI.
+Ipyrest deals with the following concepts, implemented to varying degrees: HTTP Server, Service, Request, Response, Data, MIME-Types, Compression, Logging, Caching, Time-Outs, Errors, Views, Plugins, Testing, and UI.
 
 At the moment the following plugins are available for rendering output from HTTP responses in common formats: Plain Text, CSV, HTML, Bitmaps, SVG, JSON, GeoJSON, GPX, Protobuf, (and some experimental 3D stuff).
 
-The main direct dependencies are: Python >= 3.6, jupyter (incl. lab), ipywidgets, ipyleaflet, ipyvolume, geojson, qgrid, protobuf, timeout_decorator, requests, vcr, mypy, pytest.
+The main dependencies are: Python >= 3.6, jupyter, ipywidgets, timeout_decorator, requests, and vcr. Plugin dependencies are: ipyleaflet, ipyvolume, geojson, qgrid, protobuf. Testing dependencies are flask, mypy, and pytest.
 
 Installation
 ------------
 
 Released versions of Ipyrest can be installed from PyPI with:
 
-```
+``` {.sourceCode .bash}
 pip install ipyrest
 ```
 
 Development versions of Ipyrest can be installed either directly from GitHub or after downloading/cloning and unpacking like this in its top-level directory:
 
-```
+``` {.sourceCode .bash}
 pip install git+https://github.com/deeplook/ipyrest
 
 pip install -e .
