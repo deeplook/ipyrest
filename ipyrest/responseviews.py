@@ -136,7 +136,7 @@ class SVGResponseView(ResponseView):
     A view that renders SVG somehow.
     """
     name = 'SVG'
-    mimetype_pats = ['image/svg\+xml']
+    mimetype_pats = ['image/svg\+xml.*']
 
     def render(self, resp: requests.models.Response) -> HTML:
         "Return SVG soehow, or None."
@@ -175,7 +175,7 @@ class JSONResponseView(ResponseView):
     A view that renders JSON in some semi-pretty form in an ipywidgets.Textarea.
     """
     name = 'JSON'
-    mimetype_pats = ['application/json', 'application/vnd\..*\+json']
+    mimetype_pats = ['application/json.*', 'application/vnd\..*\+json.*']
 
     def render(self, resp: requests.models.Response) -> Textarea:
         "Return a somewhat prettified JSON string."
@@ -213,7 +213,7 @@ class GeoJSONResponseView(ResponseView):
     A view that renders GeoJSON on an ipyleaflet.Map.
     """
     name = 'GeoJSON'
-    mimetype_pats = ['application/vnd\.geo\+json']
+    mimetype_pats = ['application/vnd\.geo\+json.*']
 
     def render(self, resp: requests.models.Response) -> ipyleaflet.Map:
         "Return an ipyleaflet map with the GeoJSON object rendered on it, or None."
@@ -238,7 +238,7 @@ class GPXResponseView(ResponseView):
     See https://www.topografix.com/gpx.asp
     """
     name = 'GPX'
-    mimetype_pats = ['application/gpx\+xml']
+    mimetype_pats = ['application/gpx\+xml.*']
 
     def render(self, resp: requests.models.Response) -> ipyleaflet.Map:
         "Return an ipyleaflet map with the GPX object rendered on it, or None."
@@ -278,7 +278,7 @@ class Scatter3DResponseView(ResponseView):
     of which the first three are taken to by x, y, and z.
     """
     name = 'Scatter-3D'
-    mimetype_pats = ['application/vnd\.3d\+txt']
+    mimetype_pats = ['application/vnd\.3d\+txt.*']
 
     def render(self, resp: requests.models.Response) -> Widget:
         "Return an ipyvolume widget with the data object rendered on it."
@@ -299,7 +299,7 @@ class ProtobufResponseView(ResponseView):
     A view that renders Protobuf objects deserialized into text.
     """
     name = 'Protobuf'
-    mimetype_pats = ['application/x\-protobuf']
+    mimetype_pats = ['application/x\-protobuf.*']
 
     def render(self, resp: requests.models.Response) -> Textarea:
         "Return deserialized Protobuf objects as text inside a Textarea."
