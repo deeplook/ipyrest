@@ -10,7 +10,7 @@ Ipyrest
   
 Ipyrest is an emerging Jupyter notebook widget for exploring RESTful APIs. It has two main goals: provide a more convenient interface in the spirit of Postman, and allow for plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON:
 
-![banner](images/banner.png "")
+![banner](https://github.com/deeplook/ipyrest/blob/master/images/banner.png "")
 
 Features
 --------
