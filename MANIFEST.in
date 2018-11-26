@@ -13,5 +13,6 @@ recursive-exclude * *.py[co]
 recursive-exclude tests fixtures/cassettes/*
 recursive-exclude tests fixtures/*
 recursive-exclude examples non-dist/*
+recursive-exclude examples .ipynb_checkpoints/*
 
 global-exclude ipyrest.log __pycache__ .ipynb_checkpoints .mypy_cache
