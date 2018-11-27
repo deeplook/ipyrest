@@ -7,6 +7,7 @@ Ipyrest
 [![image](https://img.shields.io/pypi/pyversions/ipyrest.svg)](https://pypi.org/project/ipyrest/)
 [![image](https://img.shields.io/pypi/v/ipyrest.svg)](https://pypi.org/project/ipyrest/)
 [![image](https://img.shields.io/pypi/l/ipyrest.svg)](https://pypi.org/project/ipyrest/)
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/deeplook)
   
 Ipyrest is an emerging Jupyter notebook widget for exploring RESTful APIs. It has two main goals: provide a more convenient interface in the spirit of Postman, and allow for plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON, see below.
 
