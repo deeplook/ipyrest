@@ -8,14 +8,29 @@ Ipyrest
 [![image](https://img.shields.io/pypi/v/ipyrest.svg)](https://pypi.org/project/ipyrest/)
 [![image](https://img.shields.io/pypi/l/ipyrest.svg)](https://pypi.org/project/ipyrest/)
   
-Ipyrest is an emerging Jupyter notebook widget for exploring RESTful APIs. It has two main goals: provide a more convenient interface in the spirit of Postman, and allow for plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON:
-
-![banner](https://github.com/deeplook/ipyrest/raw/master/images/banner.png "")
+Ipyrest is an emerging Jupyter notebook widget for exploring RESTful APIs. It has two main goals: provide a more convenient interface in the spirit of Postman, and allow for plug-in components, starting with output renderers for various MIME types, e.g. GeoJSON, see below.
 
 About
 -----
 
 At its core ipyrest is a wrapper for the excellent requests package based on the equally excellent ipywidgets package. The idea is to provide more interactive exploration capabilities when working with RESTful APIs. It does so by letting you build requests for an API call and understand more quickly the responses you receive. To that end you can use existing views for requests and responses or build your own. It is inspired by Postman, but without the bloat, and goes beyond it to make sure you can extend it the way you want. In essence, it's for data scientists rather than web developers. 
+
+
+Example
+-------
+
+``` {.sourceCode .python}
+from ipyrest import Api
+
+def reset_content_type(resp):
+    resp.headers['Content-Type'] = 'application/vnd.geo+json'
+
+url = 'https://gist.githubusercontent.com/' \
+      'deeplook/71e9ded257cfc2d8e5e9/raw/f0cfbab5f266fcb8056e8aea046f1f222346b76b/2013.geojson'
+Api(url, post_process_resp=reset_content_type)
+```
+
+![banner](https://github.com/deeplook/ipyrest/raw/master/images/banner.png "")
 
 Features
 --------
@@ -29,13 +44,13 @@ The main dependencies are: Python >= 3.6, jupyter, ipywidgets, timeout_decorator
 Installation
 ------------
 
-Released versions of Ipyrest can be installed from PyPI with:
+Released versions of ipyrest can be installed from PyPI with:
 
 ``` {.sourceCode .bash}
 pip install ipyrest
 ```
 
-Development versions of Ipyrest can be installed either directly from GitHub or after downloading/cloning and unpacking like this in its top-level directory:
+Development versions of ipyrest can be installed either directly from GitHub or after downloading/cloning and unpacking like this in its top-level directory:
 
 ``` {.sourceCode .bash}
 pip install git+https://github.com/deeplook/ipyrest
