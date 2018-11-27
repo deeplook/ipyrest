@@ -45,6 +45,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -f .coverage
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
+	find . -name '.ipynb_checkpoints' -exec rm -fr {} +
 
 lint: ## check style with flake8
 	flake8 ipyrest tests
