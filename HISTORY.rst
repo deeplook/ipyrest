@@ -17,3 +17,8 @@ History
 
 * Finally rendering README.md on PyPI(?).
 * Enable classic notebook extension for qgrid.
+
+
+0.1.3 (2018-11-27):
+
+* Minor text formatting issues.
