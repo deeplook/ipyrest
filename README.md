@@ -12,6 +12,11 @@ Ipyrest is an emerging Jupyter notebook widget for exploring RESTful APIs. It ha
 
 ![banner](https://github.com/deeplook/ipyrest/raw/master/images/banner.png "")
 
+Essence
+-------
+
+At its core ipyrest is a wrapper for the excellent requests package based on the equally excellent ipywidgets package. The idea is to provide more interactive exploration capabilities when working with RESTful APIs. It does so by letting you build requests for an API call and understand more quickly the responses you receive. To that end you can use existing views for requests and responses or build your own. It is inspired by Postman, but without the bloat, and goes beyond it to make sure you can extend it the way you want. In essence, it's for data scientists rather than web developers. 
+
 Features
 --------
 
