@@ -22,6 +22,7 @@ Example
 ``` {.sourceCode .python}
 from ipyrest import Api
 
+# Fix content-type as it is not set for gists.
 def reset_content_type(resp):
     resp.headers['Content-Type'] = 'application/vnd.geo+json'
 
