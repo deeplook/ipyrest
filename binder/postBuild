@@ -8,4 +8,5 @@ jupyter nbextension enable --py --sys-prefix qgrid
 
 # install JupyterLab extensions
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
+jupyter labextension install jupyter-leaflet
 jupyter labextension install qgrid
