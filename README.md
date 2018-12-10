@@ -4,6 +4,7 @@ Ipyrest
 [![Binder](https://mybinder.org/badge_logo.svg)](http://beta.mybinder.org/v2/gh/deeplook/ipyrest/master) 
 [![Nbviewer](https://img.shields.io/badge/render-nbviewer-orange.svg)](http://nbviewer.jupyter.org/github/deeplook/ipyrest/tree/master/)
 [![Travis-CI](http://img.shields.io/travis/deeplook/ipyrest.svg)](https://travis-ci.org/deeplook/ipyrest)
+[![image](https://img.shields.io/pypi/implementation/ipyrest.svg)](https://pypi.org/project/ipyrest/)
 [![image](https://img.shields.io/pypi/pyversions/ipyrest.svg)](https://pypi.org/project/ipyrest/)
 [![image](https://img.shields.io/pypi/v/ipyrest.svg)](https://pypi.org/project/ipyrest/)
 [![image](https://img.shields.io/pypi/l/ipyrest.svg)](https://pypi.org/project/ipyrest/)
