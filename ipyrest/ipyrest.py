@@ -262,6 +262,11 @@ class Api(VBox):
         if click_send:
             self.click_send()
 
+    def execute_request(self, *args, **kwargs):
+        "Wrapper around the module's execute_request function."
+
+        return execute_request(*args, **kwargs)
+
     def url_changed(self, change) -> None:
         "Callback to be called when the input URL is changed."
 
@@ -338,7 +343,7 @@ class Api(VBox):
         self.logger.logger.info('vcr request {} {}'.format(args, kwargs))
         if 1:
             timeout_execute_request = timeout_decorator.timeout(
-                self.timeout)(execute_request)
+                self.timeout)(self.execute_request)
             try:
                 self.logger.logger.info('callign timeout_execute_request')
                 self.resp, is_cached = timeout_execute_request(*args, **kwargs)
@@ -353,7 +358,7 @@ class Api(VBox):
                     layout=Layout(width='100%', justify_content='space-between'))
                 raise
         else:
-            self.resp, is_cached = execute_request(*args, **kwargs)
+            self.resp, is_cached = self.execute_request(*args, **kwargs)
         self.logger.logger.info(self.resp.content)
 
         if self.post_process_resp:
