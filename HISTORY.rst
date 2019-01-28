@@ -22,3 +22,9 @@ History
 0.1.3 (2018-11-27):
 
 * Minor text formatting issues.
+
+
+0.1.4 (2019-01-28):
+
+* Refactored test code partly into tools.py.
+* Wrapped execute_request function as method in Api class.
