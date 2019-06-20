@@ -1,7 +1,8 @@
 Ipyrest
 =======
 
-[![Binder](https://mybinder.org/badge_logo.svg)](http://beta.mybinder.org/v2/gh/deeplook/ipyrest/master) 
+[![Binder](https://mybinder.org/badge_logo.svg)](http://beta.mybinder.org/v2/gh/deeplook/ipyrest/master) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdeeplook%2Fipyrest.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdeeplook%2Fipyrest?ref=badge_shield)
+
 [![Nbviewer](https://img.shields.io/badge/render-nbviewer-orange.svg)](http://nbviewer.jupyter.org/github/deeplook/ipyrest/tree/master/)
 [![Travis-CI](http://img.shields.io/travis/deeplook/ipyrest.svg)](https://travis-ci.org/deeplook/ipyrest)
 [![image](https://img.shields.io/pypi/implementation/ipyrest.svg)](https://pypi.org/project/ipyrest/)
@@ -87,3 +88,7 @@ How to Contribute
 4.  Send a pull request and bug the maintainer until it gets merged and
     published. :) Make sure to add yourself to
     [AUTHORS](https://github.com/deeplook/ipyrest/blob/master/AUTHORS.rst).
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdeeplook%2Fipyrest.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdeeplook%2Fipyrest?ref=badge_large)
