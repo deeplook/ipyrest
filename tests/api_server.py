@@ -81,7 +81,7 @@ def get_header() -> str:
 
 @app.route("/get_header_echo")
 def get_header_echo() -> str:
-    return jsonify(dict((k, v) for (k, v) in request.headers.items()))
+    return jsonify({k: v for (k, v) in request.headers.items()})
 
 
 @app.route('/get_mimetype')
