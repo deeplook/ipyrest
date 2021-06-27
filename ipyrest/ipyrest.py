@@ -456,8 +456,8 @@ class Api(VBox):
 
         # request pane
         get = self.req_pane.get_child_named
-        get('Arguments').children = tuple()
-        get('Parameters').children = tuple()
+        get('Arguments').children = ()
+        get('Parameters').children = ()
         get('Headers').value = ''
         get('Data').value = ''
 
