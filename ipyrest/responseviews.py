@@ -319,4 +319,4 @@ class ProtobufResponseView(ResponseView):
 
 builtin_view_classes = [
     n for (k, n) in globals().items()
-    if type(n) == type and issubclass(n, ResponseView) and n != ResponseView]
+    if type(n) is type and issubclass(n, ResponseView) and n != ResponseView]
