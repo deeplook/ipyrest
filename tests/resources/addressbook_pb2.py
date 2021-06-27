@@ -2,7 +2,7 @@
 # source: addressbook.proto
 
 import sys
-_b=sys.version_info[0]<3 and (lambda x:x) or (lambda x:x.encode('latin1'))
+_b=(lambda x:x) if sys.version_info[0]<3 else (lambda x:x.encode('latin1'))
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
